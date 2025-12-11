@@ -48,7 +48,7 @@ Validate $? "move code to app directory"
 npm install &>>$log_file
 Validate $? "installing dependencies"
 cd
-chown -R Roboshop:Roboshop  app/
+chown -R roboshop:roboshop  /app &>>$log_file
 Validate $? "Permissions changed"
 cp $script_dir/catalogue.service /etc/systemd/system/catalogue.service
 Validate $? "Adding Catalogue service"
@@ -62,7 +62,7 @@ dnf install mongodb-mongosh -y
 Validate $? "Installed mongodb client"
 INDEX=$(mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 if [ $INDEX -le 0 ]; then
-    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
+    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$log_file
 else
     echo -e "Catalogue products already loaded ... $Y SKIPPING $N"
 fi
