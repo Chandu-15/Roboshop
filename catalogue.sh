@@ -8,7 +8,7 @@ FOLDER_PATH="/var/log/Scripting"
 script_name=$(echo $0 | cut -d "." -f1)
 log_file="$FOLDER_PATH/$script_name.log"
 script_dir=$PWD
-MONGODB_HOST = mongodb.daws-86.shop
+MONGODB_HOST=mongodb.daws-86.shop
 mkdir -p $FOLDER_PATH
 echo "script execution started at $(date)" | tee -a $log_file
 if [ $USER_ID -ne 0 ] ; then
