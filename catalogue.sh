@@ -58,7 +58,7 @@ systemctl start catalogue
 Validate $? "Start service"
 systemctl enable catalogue
 Validate $? "Enable service"
-cp mongo.repo /etc/yum.repos.d/mongo.repo
+cp $script_dir/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 Validate $? "Installed mongodb client"
 INDEX=$(mongosh mongodb.daws86s.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
