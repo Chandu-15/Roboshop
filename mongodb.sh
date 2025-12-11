@@ -22,18 +22,17 @@ else
     echo -e "Installing $2 is $G SUCCESS $N" | tee -a $log_file
 fi
 }
-
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 Validate $? "Adding Mongo repo"
-dnf install mongodb-org -y
+dnf install mongodb-org -y &>>$log_file
 Validate $? "Installing Mongodb"
-systemctl enable mongod
+systemctl enable mongod | tee -a $log_file
 Validate $? "Enable Mongodb"
-systemctl start mongod
+systemctl start mongod | tee -a $log_file
 Validate $? "start Mongodb"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 Validate $? "Allowing remote connections to mongodb"
 
-systemctl restart mongod
+systemctl restart mongod | tee -a $log_file
 Validate $? "restart mongodb"
