@@ -32,7 +32,7 @@ Validate $? "Enable Mongodb"
 systemctl start mongod
 Validate $? "start Mongodb"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mong.conf/
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf/
 Validate $? "Allowing remote connections to mongodb"
 
 systemctl restart mongod
