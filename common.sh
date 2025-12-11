@@ -9,14 +9,14 @@ script_name=$(echo $0 | cut -d "." -f1)
 log_file="$FOLDER_PATH/$script_name.log"
 script_dir=$PWD
 MONGODB_HOST=mongodb.daws-86.shop
-start_time=$(date +%s)
+START_TIME=$(date +%s)
 mkdir -p $FOLDER_PATH
 echo "script execution started at $(date)" | tee -a $log_file
 check_root(){
-if [ $USER_ID -ne 0 ] ; then
+    if [ $USER_ID -ne 0 ] ; then
     echo -e "$R ERROR : Please run this script with root access $N" | tee -a $log_file
     exit 1
-fi
+    fi
 }
 Validate(){
     if [ $1 -ne 0 ]; then 
@@ -51,23 +51,23 @@ app_setup(){
     Validate $? "Create SystemUser"
     mkdir -p /app
     Validate $? "Create App directory"
-    curl -o /tmp/appname.zip https://roboshop-artifacts.s3.amazonaws.com/appname-v3.zip &>>$log_file
+    curl -o /tmp/$appname.zip https://roboshop-artifacts.s3.amazonaws.com/$appname-v3.zip &>>$log_file
     Validate $? "downloading code to temporary folder"
     cd /app
     rm -rf /app/*
-    unzip /tmp/appname.zip &>>$log_file
+    unzip /tmp/$appname.zip &>>$log_file
     Validate $? "move code to app directory"
 }
 
 systemd_setup(){
-    cp $script_dir/appname.service /etc/systemd/system/appname.service
-    Validate $? "Adding appname service"
+    cp $script_dir/$appname.service /etc/systemd/system/$appname.service
+    Validate $? "Adding $appname service"
     systemctl daemon-reload
-    systemctl enable appname
+    systemctl enable $appname
     Validate $? "Enable service"
 }
 system_restart(){
-    systemctl restart appname
+    systemctl restart $appname
 }
 print_total_time(){
     END_TIME=$(date +%s)
