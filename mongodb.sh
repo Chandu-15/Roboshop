@@ -36,4 +36,4 @@ sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 Validate $? "Allowing remote connections to mongodb"
 
 systemctl restart mongod
-validate $? "restart mongodb"
+Validate $? "restart mongodb"
